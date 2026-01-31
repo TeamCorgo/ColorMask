@@ -1,0 +1,12 @@
+services:
+  backend:
+    build: ./backend
+    container_name: ColorMask-backend
+    ports:
+      - "9000:9000"
+
+  frontend:
+    build: ./frontend
+    container_name: ColorMask-frontend
+    ports:
+      - "9001:80"
