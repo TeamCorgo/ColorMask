@@ -30,6 +30,13 @@ def register(recieve: RegisterModel) -> dict:
             detail="Invalid username. Only A-Z, a-z, 0-9 allowed, max 16 chars.",
         )
 
+    # Cannot be a reserved name
+    if recieve.username == "0":
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid username. Reserved name.",
+        )
+
     # Cannot be already registered
     if recieve.username in STATE.users:
         raise HTTPException(
