@@ -2,6 +2,7 @@ from account.routes import account_router
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
+from game.routes import game_router
 from util.autos import shutdown, startup
 
 app = FastAPI(
@@ -33,3 +34,4 @@ async def redirect_to_docs() -> RedirectResponse:
 
 
 app.include_router(account_router, tags=["Account"], prefix="/account")
+app.include_router(game_router, tags=["Game"], prefix="/game")
