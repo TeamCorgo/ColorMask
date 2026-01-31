@@ -8,16 +8,38 @@
 
     onMount(() => {
         document.title = "Color Mask | Game";
+        localStorage.setItem("Token", token);
 
-
+        // If token is not set, redirect to login
+        if (!localStorage.getItem("Token")) {
+            setPage("login");
+        }
 
         const interval = setInterval(() => {
             updateData();
         }, 1000);
 
-        return () => clearInterval(interval);
+        const handleKey = (e) => {
+        if (e.key === "ArrowUp") move("north");
+        if (e.key === "ArrowDown") move("south");
+        if (e.key === "ArrowLeft") move("west");
+        if (e.key === "ArrowRight") move("east");
+        if (e.key === " ") move("Flip");
+        };
+        window.addEventListener("keydown", handleKey);
 
+        return () => {
+            clearInterval(interval);
+            window.removeEventListener("keydown", handleKey);
+        };
     });
+
+
+
+    function move(direction) {
+        // TODO
+        alert(direction);
+    }
 
 
     async function updateData() {
@@ -42,7 +64,6 @@
             console.log(data);
             console.log(data.view);
             // data.view is a 25 length array of hex colors
-
 
             // Convert 1D array into 2D 5x5 grid
             grid = [];
@@ -74,16 +95,19 @@
 <style>
   .grid {
     display: grid;
-    grid-template-columns: repeat(5, 3rem);
-    grid-template-rows: repeat(5, 3rem);
-    gap: 4px;
+    grid-template-columns: repeat(5, 50px);
+    grid-template-rows: repeat(5, 50px);
+    gap: 5px;
+    margin-bottom: 1rem;
   }
-
   .cell {
-    width: 3rem;
-    height: 3rem;
+    width: 50px;
+    height: 50px;
     border: 1px solid #333;
-    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
   }
 </style>
 
@@ -93,4 +117,11 @@
       <div class="cell" style="background-color: {color}"></div>
     {/each}
   {/each}
+</div>
+
+<div>
+  <button on:click={() => move("north")}>⬆</button><br/>
+  <button on:click={() => move("west")}>⬅</button>
+  <button on:click={() => move("east")}>➡</button><br/>
+  <button on:click={() => move("south")}>⬇</button>
 </div>

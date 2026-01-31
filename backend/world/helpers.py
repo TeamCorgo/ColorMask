@@ -30,4 +30,8 @@ def world_view(x: int, y: int, universe: str, size: int) -> list:
 
 
 def player_view(user: User) -> list:
-    return world_view(user.x, user.y, user.universe, 5)
+    size = 5
+    # Offset the starting coordinates so the player is centered
+    start_x = user.x - size // 2
+    start_y = user.y - size // 2
+    return world_view(start_x, start_y, user.universe, 5)
