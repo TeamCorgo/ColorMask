@@ -1,10 +1,11 @@
 <script>
     import { onMount } from "svelte";
-    import { setPage, envServerAddress } from "../store";
+    import { setPage } from "../store";
 
     let isLoading = false;
     let token = "";
     let data = {}
+    let envServerAddress = "http://104.251.216.28:9000/";
 
     // Predefined Tailwind colors (or hex codes)
     const colors = [
@@ -23,6 +24,10 @@
 
     onMount(() => {
         document.title = "Color Mask | Login";
+
+        if (localStorage.getItem("Dev")) {
+            envServerAddress = "http://10.101.0.6:9000/";
+        }
 
         const interval = setInterval(() => {
             colorIndex = (colorIndex + 1) % colors.length;

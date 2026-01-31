@@ -1,14 +1,19 @@
 <script>
     import { onMount } from "svelte";
-    import { setPage, envServerAddress } from "../store";
+    import { setPage } from "../store";
 
     let token = "asd";
     let data = {};
     let grid = [];
+    let envServerAddress = "http://104.251.216.28:9000/";
 
     onMount(() => {
         document.title = "Color Mask | Game";
         localStorage.setItem("Token", token);
+
+        if (localStorage.getItem("Dev")) {
+            envServerAddress = "http://10.101.0.6:9000/";
+        }
 
         // If token is not set, redirect to login
         if (!localStorage.getItem("Token")) {
