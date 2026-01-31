@@ -6,7 +6,6 @@
   let data = {}; // keep as object
   let envServerAddress = "http://104.251.216.28:9000/";
 
-
   // Predefined Tailwind colors (or hex codes)
   const colors = [
     '#f87171', // red-400

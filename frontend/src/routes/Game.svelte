@@ -9,7 +9,7 @@
 
     onMount(() => {
         document.title = "Color Mask | Game";
-        localStorage.setItem("Token", token);
+        //localStorage.setItem("Token", token);
 
         if (localStorage.getItem("Dev")) {
             envServerAddress = "http://10.101.0.6:9000/";

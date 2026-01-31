@@ -24,13 +24,15 @@
           <a href="#" class="hover:text-gray-300" on:click={() => setPage('game')}>Game</a>
       </div>
 
-      <div class="hidden md:flex space-x-6"
-        on:click={() => {
-          localStorage.removeItem("Token");
-          setPage('login');
-        }}
-      >
-        Logout
+      <div class="hidden md:flex space-x-6">
+        <a href="#" class="hover:text-gray-300"
+          on:click={() => {
+            localStorage.removeItem("Token");
+            setPage('login');
+          }}
+        >
+          Logout
+        </a>
       </div>
     </div>
   </div>

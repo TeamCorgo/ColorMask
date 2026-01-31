@@ -61,8 +61,7 @@
             }
 
             localStorage.setItem("Token", token);
-            //alert(localStorage.getItem("Token"));
-            console.log("Signed in", data);
+            setPage("game");
             isLoading = false;
             // setPage("game");
         } catch (error) {
