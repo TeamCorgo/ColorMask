@@ -44,7 +44,7 @@
 </style>
 
 <div class="w-screen h-screen flex flex-col items-center justify-center transition-colors duration-500" style="background-color: {bgColor};">
-  <h1 class="text-white text-9xl font-bold drop-shadow-lg text-center mb-4 stroke-black">
+  <h1 class="text-white text-[12rem] font-bold drop-shadow-lg text-center mb-4 stroke-black">
     Color Mask
   </h1>
   <p class="text-white text-sm underline cursor-pointer">
