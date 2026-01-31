@@ -27,7 +27,6 @@ def get_user(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid token",
         )
-
     return STATE.users[username]
 
 

@@ -2,6 +2,7 @@ from account.routes import account_router
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
+from util.autos import shutdown, startup
 
 app = FastAPI(
     swagger_ui_parameters={"defaultModelsExpandDepth": -1},
@@ -20,6 +21,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.add_event_handler("startup", startup)
+app.add_event_handler("shutdown", shutdown)
 
 
 @app.get("/", include_in_schema=False)
