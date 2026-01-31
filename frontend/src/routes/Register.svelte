@@ -14,14 +14,16 @@
     }
 
     try {
-      const res = await fetch(
-        `${envServerAddress}account/register?username=${encodeURIComponent(username)}`,
-        {
-          method: "POST",
-          headers: { "Accept": "application/json" },
-          body: "" // empty body like your curl
-        }
-      );
+      const res = await fetch(`${envServerAddress}account/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          username: username
+        })
+      });
 
       const data = await res.json();
       response = data;
@@ -35,13 +37,19 @@
 
 <main class="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
   {#if !response.token}
-    <h1 class="text-3xl font-bold mb-4">Register</h1>
+    <h1 class="text-3xl font-bold mb-2">Register</h1>
+
+    <p class="text-gray-600 mb-4 text-center max-w-md">
+      Registration is intentionally simple — no email, password, or personal
+      information is required. Your secure token will act as your login, so be
+      sure to store it somewhere safe.
+    </p>
 
     <input
       type="text"
       placeholder="Enter username"
       bind:value={username}
-      class="border p-2 mb-2 rounded"
+      class="border p-2 mb-2 rounded w-64"
     />
 
     <button
@@ -61,7 +69,7 @@
 
   {#if response.token}
     <h1 class="text-3xl font-bold mb-4">
-      This is your username/password, keep it in a safe place!
+      This is your login token, keep it in a safe place!
     </h1>
     <div class="mt-4 flex mb-4 items-center gap-2 p-2 border rounded bg-green-200">
       <span class="flex-1 break-all">{response.token}</span>
