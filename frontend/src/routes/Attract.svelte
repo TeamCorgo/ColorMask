@@ -1,5 +1,6 @@
 <script>
   import { onMount } from 'svelte';
+  import {setPage} from "../store";
 
   // Predefined Tailwind colors (or hex codes)
   const colors = [
@@ -47,7 +48,10 @@
   <h1 class="text-white text-[12rem] font-bold drop-shadow-lg text-center mb-4 stroke-black">
     Color Mask
   </h1>
-  <p class="text-white text-sm underline cursor-pointer">
-    Link to login
-  </p>
+<p 
+  class="text-white text-sm underline cursor-pointer" 
+  on:click={() => setPage('register')}
+>
+  Link to register
+</p>
 </div>
