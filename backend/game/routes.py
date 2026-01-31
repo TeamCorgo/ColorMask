@@ -13,13 +13,13 @@ def view_route(user: User = Depends(get_user)) -> dict:
 
 @game_router.post("/move_north")
 def move_north(user: User = Depends(get_user)) -> dict:
-    user.y += 1
+    user.y -= 1
     return {"message": "Moved north", "view": player_view(user)}
 
 
 @game_router.post("/move_south")
 def move_south(user: User = Depends(get_user)) -> dict:
-    user.y -= 1
+    user.y += 1
     return {"message": "Moved south", "view": player_view(user)}
 
 
