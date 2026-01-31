@@ -1,0 +1,10 @@
+#uvicorn main:app --reload --port 8001
+#uv init
+#uv venv
+
+fastapi
+python-multipart
+email-validator
+
+uvicorn[standard]
+#SQLAlchemy
