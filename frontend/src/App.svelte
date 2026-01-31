@@ -1,3 +1,7 @@
+<script>
+    import { currentPage, envServerAddress } from "./store";
 
-<h1>Hello World from Svelte in Docker 🐳</h1>
-<p>Test 1</p>
+    import Attract from "./routes/Attract.svelte";
+</script>
+
+{#if $currentPage === "attract"}<Attract />{/if}
