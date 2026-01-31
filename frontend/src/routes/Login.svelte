@@ -27,10 +27,8 @@
             });
 
             data = await response.json();
-            console.log(data);
-
             if (response.status !== 200) {
-                console.log(response.statusText + ": " + data.detail);
+                //console.log(response.statusText + ": " + data.detail);
                 isLoading = false;
                 return;
             }

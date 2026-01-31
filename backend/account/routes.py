@@ -3,6 +3,7 @@ from account.models import CreateModel
 from fastapi import APIRouter, Depends, HTTPException, status
 from util.shields import shield_username
 from util.state import STATE, User
+from util.tools import reserved_universe_names
 
 account_router = APIRouter()
 
@@ -31,7 +32,7 @@ def create(recieve: CreateModel) -> dict:
         )
 
     # Cannot be a reserved name
-    if recieve.username == "0":
+    if recieve.username in reserved_universe_names():
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Invalid username. Reserved name.",

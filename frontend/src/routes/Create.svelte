@@ -11,8 +11,6 @@
     data = {};
 
     try {
-      console.log(username);
-
       const response = await fetch(`${envServerAddress}account/create`, {
         method: "POST",
         headers: {
@@ -22,8 +20,6 @@
       });
 
       data = await response.json();
-      console.log(data);
-
     } catch (err) {
       data = { detail: "Error: " + err.message };
     }
