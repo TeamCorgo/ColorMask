@@ -1,6 +1,14 @@
 from account.helpers import gen_user
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from util.state import STATE
 from util.tools import reserved_universe_names
+
+scheduler = AsyncIOScheduler()
+
+
+async def recurring_task():
+    print("⚙️ Running task")
+    print("🛑 Task finished")
 
 
 def startup() -> None:
@@ -16,12 +24,15 @@ def startup() -> None:
     # print(STATE.users)
     # print(STATE.auth_tokens)
     # print(STATE.themes)
-    print("###########################")
+    scheduler.add_job(recurring_task, "interval", minutes=1)
+    scheduler.start()
+    print("🛑 Startup finished")
     return
 
 
 def shutdown() -> None:
     print("⚙️ Shutdown")
     print(STATE.users)
-    print("###########################")
+    scheduler.shutdown()
+    print("🛑 Shutdown finished")
     return

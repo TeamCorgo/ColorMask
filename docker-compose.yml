@@ -4,9 +4,14 @@ services:
     container_name: ColorMask-backend
     ports:
       - "9000:9000"
+    volumes:
+      - backend_data:/storage
 
   frontend:
     build: ./frontend
     container_name: ColorMask-frontend
     ports:
       - "9001:80"
+
+volumes:
+  backend_data:

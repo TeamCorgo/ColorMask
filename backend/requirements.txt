@@ -7,4 +7,5 @@ python-multipart
 email-validator
 
 uvicorn[standard]
+apscheduler
 #SQLAlchemy
