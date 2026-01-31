@@ -17,10 +17,13 @@
           <a href="#" class="hover:text-gray-300" on:click={() => setPage('login')}>Home</a>
       </div>
       <div class="hidden md:flex space-x-6">
-          <a href="#" class="hover:text-gray-300" on:click={() => setPage('register')}>Register</a>
+          <a href="#" class="hover:text-gray-300" on:click={() => setPage('create')}>Create</a>
       </div>
       <div class="hidden md:flex space-x-6">
           <a href="#" class="hover:text-gray-300" on:click={() => setPage('attract')}>Attract</a>
+      </div>
+      <div class="hidden md:flex space-x-6">
+          <a href="#" class="hover:text-gray-300" on:click={() => setPage('login')}>Login</a>
       </div>
     </div>
   </div>

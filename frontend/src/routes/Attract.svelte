@@ -20,7 +20,7 @@
     const interval = setInterval(() => {
       index = (index + 1) % colors.length;
       bgColor = colors[index];
-    }, 2000);
+    }, 1000);
 
     return () => clearInterval(interval);
   });
@@ -50,8 +50,8 @@
   </h1>
 <p 
   class="text-white text-sm underline cursor-pointer" 
-  on:click={() => setPage('register')}
+  on:click={() => setPage('create')}
 >
-  Link to register
+  Link to create
 </p>
 </div>

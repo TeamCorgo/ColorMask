@@ -1,5 +1,5 @@
 from account.helpers import gen_user, generate_auth_token, get_user
-from account.models import RegisterModel
+from account.models import CreateModel
 from fastapi import APIRouter, Depends, HTTPException, status
 from util.shields import shield_username
 from util.state import STATE, User
@@ -7,7 +7,7 @@ from util.state import STATE, User
 account_router = APIRouter()
 
 
-@account_router.get("/protected")
+@account_router.post("/protected")
 def protected_route(user: User = Depends(get_user)) -> dict:
     return {
         "message": f"This is a protected route for the user: {user.username}.",
@@ -21,8 +21,8 @@ def regenerate(user: User = Depends(get_user)) -> dict:
 
 
 # Registration route
-@account_router.post("/register")
-def register(recieve: RegisterModel) -> dict:
+@account_router.post("/create")
+def create(recieve: CreateModel) -> dict:
     # Username must be A-Z, a-z, 0-9 (limit to 16 chars)
     if not shield_username(recieve.username):
         raise HTTPException(

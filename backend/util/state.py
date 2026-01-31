@@ -21,7 +21,7 @@ class AppState:
     def __init__(self):
         self.users = {}
         self.themes = {}
-        self.seed = "f2a61844"
+        self.seed = "corgo844"
         self.auth_tokens = {}
 
 

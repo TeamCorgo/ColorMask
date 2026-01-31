@@ -1,5 +1,5 @@
 from pydantic import BaseModel
 
 
-class RegisterModel(BaseModel):
+class CreateModel(BaseModel):
     username: str
