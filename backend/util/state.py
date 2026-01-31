@@ -7,7 +7,7 @@ class User:
         self.created = datetime.now().strftime("%Y.%m.%d %H:%M")
         self.x = 0
         self.y = 0
-        self.universe: "User | None" = None
+        self.universe: "str | None" = None
 
 
 class Cell:

@@ -1,3 +1,4 @@
+from account.routes import account_router
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
@@ -25,3 +26,6 @@ app.add_middleware(
 async def redirect_to_docs() -> RedirectResponse:
     """Redirect index to the Swagger"""
     return RedirectResponse(url="/docs")
+
+
+app.include_router(account_router, tags=["Account"], prefix="/account")
