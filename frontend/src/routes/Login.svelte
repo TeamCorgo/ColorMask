@@ -6,10 +6,32 @@
     let token = "";
     let data = {}
 
+    // Predefined Tailwind colors (or hex codes)
+    const colors = [
+        '#f87171', // red-400
+        '#34d399', // green-400
+        '#60a5fa', // blue-400
+        '#facc15', // yellow-400
+        '#a78bfa', // purple-400
+        '#2dd4bf', // teal-400
+        '#f472b6'  // pink-400
+    ];
+
+    let colorIndex = 0;
+    let bgColor = colors[colorIndex];
+
+
     onMount(() => {
         document.title = "Color Mask | Login";
-        localStorage.removeItem("Token");
+
+        const interval = setInterval(() => {
+            colorIndex = (colorIndex + 1) % colors.length;
+            bgColor = colors[colorIndex];
+        }, 1000);
+
+        return () => clearInterval(interval);
     });
+
 
     async function handleSubmit(event) {
         event.preventDefault();
@@ -34,6 +56,7 @@
             }
 
             localStorage.setItem("Token", token);
+            //alert(localStorage.getItem("Token"));
             console.log("Signed in", data);
             isLoading = false;
             // setPage("game");
@@ -46,52 +69,63 @@
     }
 </script>
 
-<div class="bg-gray-100 flex items-center justify-center h-screen">
-    <div class="bg-white p-8 rounded-lg shadow-md w-96">
-        <h1 class="text-2xl font-semibold mb-6">Login into your account</h1>
 
-        {#if token}
-            <div class="avatar flex items-center justify-center mb-4">
-                <div class="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                    <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=corgo_{token}" alt="Avatar" />
+<div
+  class="bg-transition flex items-center justify-center h-screen"
+  style="background-color: {bgColor};"
+>
+
+    <div class="flex flex-col items-center">
+        <h1 class="text-white text-[6rem] font-bold drop-shadow-lg mb-16 z-10 stroke-black">
+            Color Mask
+        </h1>
+
+        <div class="bg-white p-8 rounded-lg shadow-md w-96">
+            <h1 class="text-2xl font-semibold mb-6">Login into your account</h1>
+
+            {#if token}
+                <div class="avatar flex items-center justify-center mb-4">
+                    <div class="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                        <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=corgo_{token}" alt="Avatar" />
+                    </div>
                 </div>
-            </div>
-        {/if}
-
-        <form on:submit={handleSubmit}>
-            <div class="mb-4">
-                <label for="token" class="block text-gray-700 font-medium mb-2">Token:</label>
-                <input
-                    type="text"
-                    id="token"
-                    bind:value={token}
-                    required
-                    class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
-                    placeholder="Enter login token"
-                />
-            </div>
-
-            {#if data.detail} 
-              <div class="mb-4 flex justify-end">
-                <div class="flex items-center bg-yellow-100 text-yellow-800 text-sm font-medium px-4 py-2 rounded-lg shadow-sm border border-yellow-200">
-                  <span>{data.detail}</span>
-                </div>
-              </div>
             {/if}
 
+            <form on:submit={handleSubmit}>
+                <div class="mb-4">
+                    <label for="token" class="block text-gray-700 font-medium mb-2">Token:</label>
+                    <input
+                        type="text"
+                        id="token"
+                        bind:value={token}
+                        required
+                        class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
+                        placeholder="Enter login token"
+                    />
+                </div>
 
-            <div class="mb-4 flex justify-end">
-                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-                    Log In
-                </button>
-            </div>
+                {#if data.detail} 
+                  <div class="mb-4 flex justify-end">
+                    <div class="flex items-center bg-yellow-100 text-yellow-800 text-sm font-medium px-4 py-2 rounded-lg shadow-sm border border-yellow-200">
+                      <span>{data.detail}</span>
+                    </div>
+                  </div>
+                {/if}
 
-            <span
-                on:click={() => setPage("create")}
-                class="text-blue-500 hover:underline cursor-pointer"
-            >
-                Create an account
-            </span>
-        </form>
+
+                <div class="mb-4 flex justify-end">
+                    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                        Log In
+                    </button>
+                </div>
+
+                <span
+                    on:click={() => setPage("create")}
+                    class="text-blue-500 hover:underline cursor-pointer"
+                >
+                    Create an account
+                </span>
+            </form>
+        </div>
     </div>
 </div>

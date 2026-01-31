@@ -1,10 +1,38 @@
 <script>
+  import { onMount } from "svelte";
   import { envServerAddress } from "../store";
-  import {setPage} from "../store";
+  import { setPage } from "../store";
 
   let username = "";
   let data = {}; // keep as object
 
+
+  // Predefined Tailwind colors (or hex codes)
+  const colors = [
+    '#f87171', // red-400
+    '#34d399', // green-400
+    '#60a5fa', // blue-400
+    '#facc15', // yellow-400
+    '#a78bfa', // purple-400
+    '#2dd4bf', // teal-400
+    '#f472b6'  // pink-400
+  ];
+
+  let colorIndex = 0;
+  let bgColor = colors[colorIndex];
+
+
+  onMount(() => {
+      document.title = "Color Mask | Create Account";
+      localStorage.removeItem("Token");
+
+      const interval = setInterval(() => {
+        colorIndex = (colorIndex + 1) % colors.length;
+        bgColor = colors[colorIndex];
+      }, 1000);
+
+      return () => clearInterval(interval);
+  });
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -26,7 +54,18 @@
   }
 </script>
 
-<body class="bg-gray-100 flex items-center justify-center h-screen">
+<div
+  class="bg-transition flex items-center justify-center h-screen"
+  style="background-color: {bgColor};"
+>
+  <div class="flex flex-col items-center">
+
+    <h1 class="text-white text-[6rem] font-bold drop-shadow-lg mb-16 z-10 stroke-black">
+      Color Mask
+    </h1>
+
+
+
     <div class="bg-white p-8 rounded-lg shadow-md w-[36rem]">
         {#if !data.token} 
         
@@ -108,5 +147,8 @@
         </div>
         {/if}
         
+
     </div>
-</body>
+
+  </div>
+</div>
