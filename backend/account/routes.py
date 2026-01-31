@@ -4,12 +4,14 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from util.shields import shield_username
 from util.state import STATE, User
 from util.tools import reserved_universe_names
+from world.helpers import player_view
 
 account_router = APIRouter()
 
 
 @account_router.post("/protected")
 def protected_route(user: User = Depends(get_user)) -> dict:
+    print(player_view(user))
     return {
         "message": f"This is a protected route for the user: {user.username}.",
     }

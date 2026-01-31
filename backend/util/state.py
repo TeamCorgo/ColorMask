@@ -23,6 +23,7 @@ class AppState:
         self.themes = {}
         self.seed = "corgo844"
         self.auth_tokens = {}
+        self.cells = {}
 
 
 STATE = AppState()
