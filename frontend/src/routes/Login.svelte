@@ -84,7 +84,7 @@
 
 
 <div
-  class="bg-transition flex items-center justify-center h-screen"
+  class="bg-transition flex items-center justify-center min-h-[100dvh]"
   style="background-color: {bgColor};"
 >
 
@@ -132,12 +132,11 @@
                     </button>
                 </div>
 
-                <span
-                    on:click={() => setPage("create")}
+                <div
+                    on:click={() => setPage("home")}
                     class="text-blue-500 hover:underline cursor-pointer"
+                    >Home Screen</div
                 >
-                    Create an account
-                </span>
             </form>
         </div>
     </div>

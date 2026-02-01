@@ -58,7 +58,7 @@
 </script>
 
 <div
-  class="bg-transition flex items-center justify-center h-screen"
+  class="bg-transition flex items-center justify-center min-h-[100dvh]"
   style="background-color: {bgColor};"
 >
   <div class="flex flex-col items-center">
@@ -108,10 +108,10 @@
                 Create Account
               </button>
             </div>
-            <span
-              on:click={() => setPage("login")}
-              class="text-blue-500 hover:underline cursor-pointer"
-              >Log into an existing account</span
+            <div
+                on:click={() => setPage("home")}
+                class="text-blue-500 hover:underline cursor-pointer"
+                >Home Screen</div
             >
         </form>
         {/if}

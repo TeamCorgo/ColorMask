@@ -10,6 +10,10 @@
     }
 
     .bg-transition {
-        transition: background-color 1s ease;
+        transition: background-color 2s ease;
+    }
+
+    .char {
+        transition: color .8s ease;
     }
 }
