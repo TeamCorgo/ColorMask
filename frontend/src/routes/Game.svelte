@@ -86,7 +86,6 @@
 
     async function paint() {
         data = {};
-
         try {
             const response = await fetch(envServerAddress + "game/paint", {
                 method: "POST",
@@ -269,6 +268,8 @@
 
 
 Use arrow keys or buttons<br>
+Players cannot paint the origin: X:0, Y:0.
+
 
 <div class="grid gap-[5px] mb-4 w-full"
      style="grid-template-columns: repeat(3, 1fr);
@@ -290,10 +291,11 @@ Use arrow keys or buttons<br>
 
   <button
     class="flex items-center justify-center text-2xl border rounded
-           col-start-2 row-start-2
+           col-start-2 row-start-2 disabled:opacity-50 disabled:cursor-not-allowed
            transition hover:shadow-lg hover:-translate-y-0.5"
     style="background-color: {user.color}"
     on:click={() => paint()}
+    disabled={user.posx == 0 && user.posy == 0}
   >
     🎨
   </button>
@@ -338,9 +340,20 @@ Player must be at X:0, Y:0 to change their mask color.
     Change 🎭 to Black
   </button>
 
+  <!-- Green Button -->
+  <button
+    class="flex items-center justify-center text-2xl font-semibold border rounded-lg 
+           px-6 py-3 transition transform hover:shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed"
+    style="background-color: #00FF00"
+    on:click={() => swap("green")}
+    disabled={user.posx !== 0 || user.posy !== 0}
+  >
+    Change 🎭 to Green
+  </button>
+
   <!-- Red Button -->
   <button
-    class="flex items-center justify-center text-white text-2xl font-semibold border rounded-lg 
+    class="flex items-center justify-center text-2xl font-semibold border rounded-lg 
            px-6 py-3 transition transform hover:shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed"
     style="background-color: #FF0000"
     on:click={() => swap("red")}
@@ -351,7 +364,7 @@ Player must be at X:0, Y:0 to change their mask color.
 
   <!-- Blue Button -->
   <button
-    class="flex items-center justify-center text-white text-2xl font-semibold border rounded-lg 
+    class="flex items-center justify-center text-2xl font-semibold border rounded-lg 
            px-6 py-3 transition transform hover:shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed"
     style="background-color: #0000FF"
     on:click={() => swap("blue")}
@@ -360,14 +373,36 @@ Player must be at X:0, Y:0 to change their mask color.
     Change 🎭 to Blue
   </button>
 
-  <!-- Green Button -->
+  <!-- Orange Button -->
   <button
-    class="flex items-center justify-center text-white text-2xl font-semibold border rounded-lg 
+    class="flex items-center justify-center text-2xl font-semibold border rounded-lg 
            px-6 py-3 transition transform hover:shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed"
-    style="background-color: #00FF00"
-    on:click={() => swap("green")}
+    style="background-color: #FFA500"
+    on:click={() => swap("orange")}
     disabled={user.posx !== 0 || user.posy !== 0}
   >
-    Change 🎭 to Green
+    Change 🎭 to Orange
+  </button>
+
+  <!-- Yellow Button -->
+  <button
+    class="flex items-center justify-center text-2xl font-semibold border rounded-lg 
+           px-6 py-3 transition transform hover:shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed"
+    style="background-color: #FFFF00"
+    on:click={() => swap("yellow")}
+    disabled={user.posx !== 0 || user.posy !== 0}
+  >
+    Change 🎭 to Yellow
+  </button>
+
+  <!-- Purple Button -->
+  <button
+    class="flex items-center justify-center text-2xl font-semibold border rounded-lg 
+           px-6 py-3 transition transform hover:shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed"
+    style="background-color: #800080"
+    on:click={() => swap("purple")}
+    disabled={user.posx !== 0 || user.posy !== 0}
+  >
+    Change 🎭 to Purple
   </button>
 </div>

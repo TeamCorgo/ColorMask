@@ -1,7 +1,7 @@
 from account.helpers import get_user
 from fastapi import APIRouter, Depends
 from util.state import STATE, User
-from world.helpers import gen_cord, player_view
+from world.helpers import gen_cord, player_view, tron_check
 
 game_router = APIRouter()
 
@@ -15,6 +15,7 @@ def view_route(user: User = Depends(get_user)) -> dict:
         "universe": user.universe,
         "color": user.color,
     }
+
     return {"view": player_view(user), "userdata": userdata}
 
 
@@ -83,35 +84,122 @@ def swap_white_route(user: User = Depends(get_user)) -> dict:
     return {"view": player_view(user), "userdata": userdata}
 
 
+@game_router.post("/swap_yellow")
+def swap_yellow_route(user: User = Depends(get_user)) -> dict:
+    user.color = "#FFFF00"
+    userdata = {
+        "username": user.username,
+        "posx": user.x,
+        "posy": user.y,
+        "universe": user.universe,
+        "color": user.color,
+    }
+    return {"view": player_view(user), "userdata": userdata}
+
+
+@game_router.post("/swap_orange")
+def swap_orange_route(user: User = Depends(get_user)) -> dict:
+    user.color = "#FFA500"
+    userdata = {
+        "username": user.username,
+        "posx": user.x,
+        "posy": user.y,
+        "universe": user.universe,
+        "color": user.color,
+    }
+    return {"view": player_view(user), "userdata": userdata}
+
+
+@game_router.post("/swap_purple")
+def swap_purple_route(user: User = Depends(get_user)) -> dict:
+    user.color = "#800080"
+    userdata = {
+        "username": user.username,
+        "posx": user.x,
+        "posy": user.y,
+        "universe": user.universe,
+        "color": user.color,
+    }
+    return {"view": player_view(user), "userdata": userdata}
+
+
 @game_router.post("/move_north")
 def move_north(user: User = Depends(get_user)) -> dict:
+    if tron_check(user, user.x, user.y - 1):
+        return {}
     user.y -= 1
-    return {"message": "Moved north", "view": player_view(user)}
+    userdata = {
+        "username": user.username,
+        "posx": user.x,
+        "posy": user.y,
+        "universe": user.universe,
+        "color": user.color,
+    }
+    return {"message": "Moved north", "view": player_view(user), "userdata": userdata}
 
 
 @game_router.post("/move_south")
 def move_south(user: User = Depends(get_user)) -> dict:
+    if tron_check(user, user.x, user.y + 1):
+        return {}
     user.y += 1
-    return {"message": "Moved south", "view": player_view(user)}
+    userdata = {
+        "username": user.username,
+        "posx": user.x,
+        "posy": user.y,
+        "universe": user.universe,
+        "color": user.color,
+    }
+    return {"message": "Moved south", "view": player_view(user), "userdata": userdata}
 
 
 @game_router.post("/move_east")
 def move_east(user: User = Depends(get_user)) -> dict:
+    if tron_check(user, user.x + 1, user.y):
+        return {}
     user.x += 1
-    return {"message": "Moved east", "view": player_view(user)}
+    userdata = {
+        "username": user.username,
+        "posx": user.x,
+        "posy": user.y,
+        "universe": user.universe,
+        "color": user.color,
+    }
+    return {"message": "Moved east", "view": player_view(user), "userdata": userdata}
 
 
 @game_router.post("/move_west")
 def move_west(user: User = Depends(get_user)) -> dict:
+    if tron_check(user, user.x - 1, user.y):
+        return {}
+
     user.x -= 1
-    return {"message": "Moved west", "view": player_view(user)}
+    userdata = {
+        "username": user.username,
+        "posx": user.x,
+        "posy": user.y,
+        "universe": user.universe,
+        "color": user.color,
+    }
+    return {"message": "Moved west", "view": player_view(user), "userdata": userdata}
 
 
 @game_router.post("/paint")
 def paint(user: User = Depends(get_user)) -> None:
+    if user.x == 0 and user.y == 0:
+        return {"message": "BOUNCE!", "view": player_view(user)}
+
     cord = gen_cord(user.x, user.y, user.universe)
     # cell = Cell(color=rng.choice(STATE.themes[user.universe]))
     # STATE.cells[cord] = cell
     STATE.cells[cord] = user.color
+
+    userdata = {
+        "username": user.username,
+        "posx": user.x,
+        "posy": user.y,
+        "universe": user.universe,
+        "color": user.color,
+    }
     # return {"message": "Moved west", "view": player_view(user)}
-    return {"message": "Paint", "view": player_view(user)}
+    return {"message": "Paint", "view": player_view(user), "userdata": userdata}
