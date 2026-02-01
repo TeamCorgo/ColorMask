@@ -11,7 +11,7 @@ services:
     build: ./frontend
     container_name: ColorMask-frontend
     ports:
-      - "80:80"
+      - "9001:80"
 
 volumes:
   backend_data:
