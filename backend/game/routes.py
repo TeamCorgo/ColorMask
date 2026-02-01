@@ -8,7 +8,14 @@ game_router = APIRouter()
 
 @game_router.post("/view")
 def view_route(user: User = Depends(get_user)) -> dict:
-    return {"view": player_view(user)}
+    userdata = {
+        "username": user.username,
+        "posx": user.x,
+        "posy": user.y,
+        "universe": user.universe,
+        "color": user.color,
+    }
+    return {"view": player_view(user), "userdata": userdata}
 
 
 @game_router.post("/move_north")
