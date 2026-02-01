@@ -18,6 +18,71 @@ def view_route(user: User = Depends(get_user)) -> dict:
     return {"view": player_view(user), "userdata": userdata}
 
 
+@game_router.post("/red")
+def red_route(user: User = Depends(get_user)) -> dict:
+    user.color = "#FF0000"
+    userdata = {
+        "username": user.username,
+        "posx": user.x,
+        "posy": user.y,
+        "universe": user.universe,
+        "color": user.color,
+    }
+    return {"view": player_view(user), "userdata": userdata}
+
+
+@game_router.post("/blue")
+def blue_route(user: User = Depends(get_user)) -> dict:
+    user.color = "#0000FF"
+    userdata = {
+        "username": user.username,
+        "posx": user.x,
+        "posy": user.y,
+        "universe": user.universe,
+        "color": user.color,
+    }
+    return {"view": player_view(user), "userdata": userdata}
+
+
+@game_router.post("/green")
+def green_route(user: User = Depends(get_user)) -> dict:
+    user.color = "#00FF00"
+    userdata = {
+        "username": user.username,
+        "posx": user.x,
+        "posy": user.y,
+        "universe": user.universe,
+        "color": user.color,
+    }
+    return {"view": player_view(user), "userdata": userdata}
+
+
+@game_router.post("/black")
+def black_route(user: User = Depends(get_user)) -> dict:
+    user.color = "#000000"
+    userdata = {
+        "username": user.username,
+        "posx": user.x,
+        "posy": user.y,
+        "universe": user.universe,
+        "color": user.color,
+    }
+    return {"view": player_view(user), "userdata": userdata}
+
+
+@game_router.post("/white")
+def white_route(user: User = Depends(get_user)) -> dict:
+    user.color = "#FFFFFF"
+    userdata = {
+        "username": user.username,
+        "posx": user.x,
+        "posy": user.y,
+        "universe": user.universe,
+        "color": user.color,
+    }
+    return {"view": player_view(user), "userdata": userdata}
+
+
 @game_router.post("/move_north")
 def move_north(user: User = Depends(get_user)) -> dict:
     user.y -= 1
