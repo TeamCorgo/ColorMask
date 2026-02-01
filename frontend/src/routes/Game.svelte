@@ -1,5 +1,5 @@
 <script>
-    import { onMount } from "svelte";
+    import { onMount, onDestroy } from "svelte";
     import { setPage } from "../store";
 
     let token = "";
@@ -20,6 +20,8 @@
             setPage("login");
         }
 
+        window.addEventListener("keydown", preventScroll);
+
         // Convert session to token
         token = localStorage.getItem("Token");
 
@@ -36,6 +38,8 @@
         };
         window.addEventListener("keydown", handleKey);
 
+
+
         // Fire on first load (skip the interval)
         updateData();
 
@@ -44,6 +48,37 @@
             window.removeEventListener("keydown", handleKey);
         };
     });
+
+
+
+
+    function preventScroll(event) {
+        // List of keys that scroll the page
+        const keys = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " "];
+        if (keys.includes(event.key)) {
+        event.preventDefault();
+        }
+    }
+
+    onDestroy(() => {
+        window.removeEventListener("keydown", preventScroll);
+    });
+
+    async function swap(color) {
+        data = {};
+        try {
+            const response = await fetch(envServerAddress + "game/swap_" + color, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
+                },
+            });
+            data = await response.json();
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    }
 
 
 
@@ -152,7 +187,7 @@
     display: grid;
     grid-template-columns: repeat(5, 50px);
     grid-template-rows: repeat(5, 50px);
-    gap: 5px;
+    gap: 9px;
     margin-bottom: 1rem;
   }
   .cell {
@@ -164,8 +199,6 @@
     justify-content: center;
     transition: background-color 0.2s;
   }
-
-
   .control-btn {
     width: 55px;
     height: 55px;
@@ -235,21 +268,21 @@
 </div>
 
 
-<h2>Grid 5×5 — Use arrow keys or buttons</h2>
+Use arrow keys or buttons<br>
 
-<div class="grid gap-[5px] mb-4
-            [grid-template-columns:repeat(3,50px)]
-            [grid-template-rows:repeat(3,50px)]">
+<div class="grid gap-[5px] mb-4 w-full"
+     style="grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);">
 
   <button class="flex items-center justify-center text-2xl border rounded
-                 col-start-2 row-start-1
+                 col-start-2 row-start-1 bg-gray-100
                  transition hover:shadow-lg hover:-translate-y-0.5"
           on:click={() => move("north")}>
     ⬆️
   </button>
 
   <button class="flex items-center justify-center text-2xl border rounded
-                 col-start-1 row-start-2
+                 col-start-1 row-start-2 bg-gray-100
                  transition hover:shadow-lg hover:-translate-y-0.5"
           on:click={() => move("west")}>
     ⬅️
@@ -266,17 +299,75 @@
   </button>
     
   <button class="flex items-center justify-center text-2xl border rounded
-                 col-start-3 row-start-2
+                 col-start-3 row-start-2 bg-gray-100
                  transition hover:shadow-lg hover:-translate-y-0.5"
           on:click={() => move("east")}>
     ➡️
   </button>
 
   <button class="flex items-center justify-center text-2xl border rounded
-                 col-start-2 row-start-3
+                 col-start-2 row-start-3 bg-gray-100
                  transition hover:shadow-lg hover:-translate-y-0.5"
           on:click={() => move("south")}>
     ⬇️
   </button>
+</div>
 
+
+Player must be at X:0, Y:0 to change their mask color.
+<div class="flex flex-col gap-3">
+  <!-- White Button -->
+  <button
+    class="flex items-center justify-center text-black text-2xl font-semibold border rounded-lg 
+           px-6 py-3 transition transform hover:shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed"
+    style="background-color: #FFFFFF"
+    on:click={() => swap("white")}
+    disabled={user.posx !== 0 || user.posy !== 0}
+  >
+    Change 🎭 to White
+  </button>
+
+  <!-- Black Button -->
+  <button
+    class="flex items-center justify-center text-white text-2xl font-semibold border rounded-lg 
+           px-6 py-3 transition transform hover:shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed"
+    style="background-color: #000000"
+    on:click={() => swap("black")}
+    disabled={user.posx !== 0 || user.posy !== 0}
+  >
+    Change 🎭 to Black
+  </button>
+
+  <!-- Red Button -->
+  <button
+    class="flex items-center justify-center text-white text-2xl font-semibold border rounded-lg 
+           px-6 py-3 transition transform hover:shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed"
+    style="background-color: #FF0000"
+    on:click={() => swap("red")}
+    disabled={user.posx !== 0 || user.posy !== 0}
+  >
+    Change 🎭 to Red
+  </button>
+
+  <!-- Blue Button -->
+  <button
+    class="flex items-center justify-center text-white text-2xl font-semibold border rounded-lg 
+           px-6 py-3 transition transform hover:shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed"
+    style="background-color: #0000FF"
+    on:click={() => swap("blue")}
+    disabled={user.posx !== 0 || user.posy !== 0}
+  >
+    Change 🎭 to Blue
+  </button>
+
+  <!-- Green Button -->
+  <button
+    class="flex items-center justify-center text-white text-2xl font-semibold border rounded-lg 
+           px-6 py-3 transition transform hover:shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed"
+    style="background-color: #00FF00"
+    on:click={() => swap("green")}
+    disabled={user.posx !== 0 || user.posy !== 0}
+  >
+    Change 🎭 to Green
+  </button>
 </div>

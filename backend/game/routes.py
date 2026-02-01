@@ -18,8 +18,8 @@ def view_route(user: User = Depends(get_user)) -> dict:
     return {"view": player_view(user), "userdata": userdata}
 
 
-@game_router.post("/red")
-def red_route(user: User = Depends(get_user)) -> dict:
+@game_router.post("/swap_red")
+def swap_red_route(user: User = Depends(get_user)) -> dict:
     user.color = "#FF0000"
     userdata = {
         "username": user.username,
@@ -31,8 +31,8 @@ def red_route(user: User = Depends(get_user)) -> dict:
     return {"view": player_view(user), "userdata": userdata}
 
 
-@game_router.post("/blue")
-def blue_route(user: User = Depends(get_user)) -> dict:
+@game_router.post("/swap_blue")
+def swap_blue_route(user: User = Depends(get_user)) -> dict:
     user.color = "#0000FF"
     userdata = {
         "username": user.username,
@@ -44,8 +44,8 @@ def blue_route(user: User = Depends(get_user)) -> dict:
     return {"view": player_view(user), "userdata": userdata}
 
 
-@game_router.post("/green")
-def green_route(user: User = Depends(get_user)) -> dict:
+@game_router.post("/swap_green")
+def swap_green_route(user: User = Depends(get_user)) -> dict:
     user.color = "#00FF00"
     userdata = {
         "username": user.username,
@@ -57,8 +57,8 @@ def green_route(user: User = Depends(get_user)) -> dict:
     return {"view": player_view(user), "userdata": userdata}
 
 
-@game_router.post("/black")
-def black_route(user: User = Depends(get_user)) -> dict:
+@game_router.post("/swap_black")
+def swap_black_route(user: User = Depends(get_user)) -> dict:
     user.color = "#000000"
     userdata = {
         "username": user.username,
@@ -70,8 +70,8 @@ def black_route(user: User = Depends(get_user)) -> dict:
     return {"view": player_view(user), "userdata": userdata}
 
 
-@game_router.post("/white")
-def white_route(user: User = Depends(get_user)) -> dict:
+@game_router.post("/swap_white")
+def swap_white_route(user: User = Depends(get_user)) -> dict:
     user.color = "#FFFFFF"
     userdata = {
         "username": user.username,

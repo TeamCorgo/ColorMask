@@ -74,6 +74,15 @@
 </script>
 
 
+<style>
+.gridc {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+}
+</style>
+
+
 <div
   class="bg-transition flex items-center justify-center h-screen"
   style="background-color: {bgColor};"
