@@ -8,4 +8,5 @@ email-validator
 
 uvicorn[standard]
 apscheduler
+pillow
 #SQLAlchemy

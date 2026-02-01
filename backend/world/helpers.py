@@ -1,5 +1,6 @@
 import random
 
+from PIL import Image
 from util.state import STATE, User
 
 
@@ -79,3 +80,28 @@ def tron_check(user: User, x: int, y: int) -> bool:
     if user.color == "#800080" and cell_color == "#00FF00":
         return True
     return False
+
+
+def world_image(size: int) -> list:
+    colors = world_view(0 - int(size / 2), 0 - int(size / 2), "0", size)
+    print(colors)
+
+    grid_size = size
+    cell_size = 1  # pixels per square
+
+    img_size = grid_size * cell_size
+    img = Image.new("RGB", (img_size, img_size))
+
+    for i, color in enumerate(colors):
+        x = (i % grid_size) * cell_size
+        y = (i // grid_size) * cell_size
+
+        for px in range(x, x + cell_size):
+            for py in range(y, y + cell_size):
+                img.putpixel(
+                    (px, py), tuple(int(color[j : j + 2], 16) for j in (1, 3, 5))
+                )
+
+    # img.save("grid.png")
+
+    return colors
