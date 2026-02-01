@@ -1,0 +1,62 @@
+import os
+import shutil
+
+from account.helpers import gen_user, get_user
+from fastapi import APIRouter, Depends, HTTPException, status
+from util.state import STATE, User
+from util.tools import (
+    reserved_universe_names,
+    save_cells,
+    save_themes,
+    save_tokens,
+    save_users,
+)
+
+admin_router = APIRouter()
+
+
+@admin_router.post("/state")
+def state_route(user: User = Depends(get_user)) -> dict:
+    if not user.username != "Hunter":
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid username",
+        )
+    return {
+        "tokens": STATE.auth_tokens,
+        "users": STATE.users,
+        "themes": STATE.themes,
+        "cells": STATE.cells,
+    }
+
+
+@admin_router.post("/purge")
+def pruge_route() -> None:
+    storage_path = "/storage"
+
+    # Clear everything inside the folder but keep the folder itself
+    for item in os.listdir(storage_path):
+        item_path = os.path.join(storage_path, item)
+        if os.path.isfile(item_path) or os.path.islink(item_path):
+            os.unlink(item_path)  # remove file or symlink
+        elif os.path.isdir(item_path):
+            shutil.rmtree(item_path)  # remove directory and its contents
+
+    # Make sure the storage folders exists
+    os.makedirs("/storage/users", exist_ok=True)
+    os.makedirs("/storage/cells", exist_ok=True)
+    os.makedirs("/storage/tokens", exist_ok=True)
+
+    for name in reserved_universe_names():
+        STATE.users[name] = gen_user(name)
+        STATE.themes[name] = ["#000000", "#FFFFFF"]
+
+    # Set a default token for Hunter (Quick Developmnent)
+    STATE.auth_tokens["Hunter"] = "asd"
+
+    save_users(STATE.users)
+    save_cells(STATE.cells)
+    save_tokens(STATE.auth_tokens)
+    save_themes(STATE.themes)
+
+    return
