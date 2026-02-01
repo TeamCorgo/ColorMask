@@ -145,6 +145,11 @@
         class="text-blue-500 hover:underline cursor-pointer"
         >Create an account</div
       >
+      <div
+        on:click={() => setPage("map")}
+        class="text-blue-500 hover:underline cursor-pointer"
+        >View Map</div
+      >
     </div>
   </div>
 </div>

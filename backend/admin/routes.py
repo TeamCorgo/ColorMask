@@ -12,12 +12,12 @@ admin_router = APIRouter()
 
 
 @admin_router.post("/state")
-def state_route():  # user: User = Depends(get_user)) -> dict:
-    # if not user.username != "Hunter":
-    #    raise HTTPException(
-    #        status_code=status.HTTP_400_BAD_REQUEST,
-    #        detail="Invalid username",
-    #    )
+def state_route(user: User = Depends(get_user)) -> dict:
+    if user.username != "Hunter":
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid username",
+        )
     return {
         "tokens": STATE.auth_tokens,
         "users": STATE.users,
@@ -60,12 +60,7 @@ def pruge_route(user: User = Depends(get_user)) -> None:
 
 
 @admin_router.post("/view")
-def view_route(user: User = Depends(get_user)) -> StreamingResponse:
-    if not user.username == "Hunter":
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Invalid username",
-        )
+def view_route() -> StreamingResponse:
     STATE.image.seek(0)  # ← Reset pointer to start
     return StreamingResponse(STATE.image, media_type="image/png")
 
