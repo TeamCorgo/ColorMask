@@ -19,8 +19,8 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://10.101.0.6",
-        "http://104.251.216.28",
+        "http://10.101.0.6:9000",  # if your dev server uses a port
+        "http://104.251.216.28:9001",  # frontend origin
     ],
     allow_credentials=True,
     allow_methods=["*"],
