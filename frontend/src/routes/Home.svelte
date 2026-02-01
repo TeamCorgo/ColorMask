@@ -27,7 +27,7 @@
   ];
 
   let colorIndex = 0;
-  let bgColor = colors[colorIndex];
+  let bgColor = randomColor();
 
   const text = "Color Mask";
   let charColors = Array(text.length).fill(colors[0]); // initial colors
@@ -51,15 +51,19 @@
         bgColor = colors[colorIndex];
       }, 2500);
 
+      // random starting colors
+      charColors = Array.from(
+        { length: text.length },
+        () => randomColor()
+      );
 
-  // Set up independent timers for each character
-  text.split("").forEach((_, i) => {
-    setInterval(() => {
-      charColors[i] = randomColor();
-    }, 500 + Math.random() * 1500); // random interval per character
-  });
+      const id = setInterval(() => {
+        const i = Math.floor(Math.random() * text.length);
+        charColors[i] = randomColor();
+        charColors = [...charColors];
+      }, 250); // smoother look
 
-      return () => clearInterval(interval);
+      return () => clearInterval(id);
   });
 
   async function handleSubmit(event) {
@@ -91,13 +95,13 @@
 >
   <div class="flex flex-col items-center">
 
-    <h1 class="text-[9rem] font-bold drop-shadow-lg mb-16 z-10 stroke-black select-none">
+    <h1 class="text-4xl sm:text-6xl md:text-8xl lg:text-[9rem] font-bold drop-shadow-lg mb-4 sm:mb-8 md:mb-16 z-10 stroke-black select-none">
       {#each text.split("") as char, i}
         <span class="char" style="color: {charColors[i]}">{char}</span>
       {/each}
     </h1>
 
-    <div class="bg-white p-8 rounded-lg shadow-md w-[36rem]">
+    <div class="bg-white p-4 sm:p-6 md:p-8 rounded-lg shadow-md w-full max-w-sm sm:max-w-md md:max-w-2xl mx-4">
       <h1 class="text-2xl font-semibold mb-6">
         <a href="https://globalgamejam.org/" target="_blank" class="text-blue-500 hover:underline">
           GGJ

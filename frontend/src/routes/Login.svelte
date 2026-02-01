@@ -19,8 +19,15 @@
     ];
 
     let colorIndex = 0;
-    let bgColor = colors[colorIndex];
+    let bgColor = randomColor();
 
+    const text = "Color Mask";
+    let charColors = Array(text.length).fill(colors[0]); // initial colors
+
+    // Function to randomize color for a character
+    function randomColor() {
+        return colors[Math.floor(Math.random() * colors.length)];
+    }
 
     onMount(() => {
         document.title = "Color Mask | Login";
@@ -34,7 +41,19 @@
             bgColor = colors[colorIndex];
         }, 1000);
 
-        return () => clearInterval(interval);
+      // random starting colors
+      charColors = Array.from(
+        { length: text.length },
+        () => randomColor()
+      );
+
+      const id = setInterval(() => {
+        const i = Math.floor(Math.random() * text.length);
+        charColors[i] = randomColor();
+        charColors = [...charColors];
+      }, 250); // smoother look
+
+      return () => clearInterval(id);
     });
 
 
@@ -89,16 +108,18 @@
 >
 
     <div class="flex flex-col items-center">
-        <h1 class="text-white text-[6rem] font-bold drop-shadow-lg mb-16 z-10 stroke-black select-none">
-            Color Mask
+        <h1 class="text-4xl sm:text-6xl md:text-8xl lg:text-[9rem] font-bold drop-shadow-lg mb-4 sm:mb-8 md:mb-16 z-10 stroke-black select-none">
+        {#each text.split("") as char, i}
+            <span class="char" style="color: {charColors[i]}">{char}</span>
+        {/each}
         </h1>
 
-        <div class="bg-white p-8 rounded-lg shadow-md w-96">
+        <div class="bg-white p-4 sm:p-6 md:p-8 rounded-lg shadow-md w-full max-w-sm sm:max-w-md md:max-w-2xl mx-4">
             <h1 class="text-2xl font-semibold mb-6">Login into your account</h1>
 
             {#if token}
                 <div class="avatar flex items-center justify-center mb-4">
-                    <div class="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                    <div class="w-16 sm:w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                         <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=corgo_{token}" alt="Avatar" />
                     </div>
                 </div>
@@ -118,8 +139,8 @@
                 </div>
 
                 {#if data.detail} 
-                  <div class="mb-4 flex justify-end">
-                    <div class="flex items-center bg-yellow-100 text-yellow-800 text-sm font-medium px-4 py-2 rounded-lg shadow-sm border border-yellow-200">
+                  <div class="mb-4 flex justify-center sm:justify-end">
+                    <div class="flex items-center bg-yellow-100 text-yellow-800 text-xs sm:text-sm font-medium px-3 sm:px-4 py-2 rounded-lg shadow-sm border border-yellow-200">
                       <span>{data.detail}</span>
                     </div>
                   </div>
