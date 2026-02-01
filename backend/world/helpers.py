@@ -2,7 +2,7 @@ import math
 import random
 from io import BytesIO
 
-from PIL import Image, ImageDraw
+from PIL import Image
 from util.state import STATE, User
 
 
@@ -86,41 +86,21 @@ def tron_check(user: User, x: int, y: int) -> bool:
 
 def world_colors(size: int) -> list:
     colors = world_view(0 - int(size / 2), 0 - int(size / 2), "0", size)
-    print(colors)
-
-    grid_size = size
-    cell_size = 1  # pixels per square
-
-    img_size = grid_size * cell_size
-    img = Image.new("RGB", (img_size, img_size))
-
-    for i, color in enumerate(colors):
-        x = (i % grid_size) * cell_size
-        y = (i // grid_size) * cell_size
-
-        for px in range(x, x + cell_size):
-            for py in range(y, y + cell_size):
-                img.putpixel(
-                    (px, py), tuple(int(color[j : j + 2], 16) for j in (1, 3, 5))
-                )
-
-    # img.save("grid.png")
-
+    # print(colors)
     return colors
 
 
 def colors_to_image(colors: list) -> BytesIO:
-    grid_size = int(math.sqrt(len(colors)))
-    cell_size = 50
+    # Convert hex strings to RGB tuples
+    rgb_colors = [tuple(int(c[i : i + 2], 16) for i in (1, 3, 5)) for c in colors]
 
-    img = Image.new("RGB", (grid_size * cell_size, grid_size * cell_size))
-    draw = ImageDraw.Draw(img)
+    # Determine image dimensions
+    grid_size = int(math.sqrt(len(rgb_colors)))  # Assuming square image
+    if grid_size * grid_size < len(rgb_colors):
+        grid_size += 1  # round up if not a perfect square
 
-    for i, color in enumerate(colors):
-        x = (i % grid_size) * cell_size
-        y = (i // grid_size) * cell_size
-
-        draw.rectangle([x, y, x + cell_size, y + cell_size], fill=color)
+    img = Image.new("RGB", (grid_size, grid_size))
+    img.putdata(rgb_colors)
 
     buffer = BytesIO()
     img.save(buffer, format="PNG")
