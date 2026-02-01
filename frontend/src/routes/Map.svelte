@@ -1,5 +1,6 @@
 <script>
   import { onMount } from "svelte";
+  import { setPage } from "../store";
 
   let canvas;
   let ctx;
@@ -31,6 +32,10 @@
   function draw() {
     if (!ctx || !img.complete) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Disable smoothing for pixel art
+    ctx.imageSmoothingEnabled = false;
+
     ctx.save();
     ctx.translate(offsetX, offsetY);
     ctx.scale(scale, scale);

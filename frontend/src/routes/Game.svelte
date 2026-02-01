@@ -96,8 +96,6 @@
             });
             data = await response.json();
                         //alert(localStorage.getItem("Token"));
-            console.log(data);
-            console.log(data.view);
             // data.view is a 25 length array of hex colors
 
             // Convert 1D array into 2D 5x5 grid

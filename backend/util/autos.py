@@ -6,12 +6,14 @@ from util.state import STATE
 from util.tools import (
     reserved_universe_names,
 )
+from world.helpers import colors_to_image, world_colors
 
 scheduler = AsyncIOScheduler()
 
 
 async def recurring_task() -> None:
     print("⚙️ Running task")
+    STATE.image = colors_to_image(world_colors(500))
     print("🛑 Task finished")
     return
 
@@ -55,8 +57,12 @@ def startup() -> None:
     # print(STATE.users)
     # print(STATE.auth_tokens)
     # print(STATE.themes)
+
+    STATE.image = colors_to_image(world_colors(500))
+
     scheduler.add_job(recurring_task, "interval", minutes=1)
     scheduler.start()
+
     print("🛑 Startup finished")
     return
 
