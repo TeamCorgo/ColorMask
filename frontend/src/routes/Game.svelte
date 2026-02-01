@@ -228,13 +228,22 @@
 /* Keyframes for pulsing glow */
 @keyframes pulseGlow {
   0% {
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.7), 0 0 16px rgba(255, 255, 0, 0.6);
+    box-shadow:
+      0 0 12px rgba(255, 255, 0, 0.9),
+      0 0 24px rgba(255, 255, 0, 0.8),
+      0 0 48px rgba(255, 255, 0, 0.6);
   }
   50% {
-    box-shadow: 0 0 16px rgba(0, 0, 0, 0.8), 0 0 32px rgba(255, 255, 0, 1);
+    box-shadow:
+      0 0 20px rgba(255, 255, 0, 1),
+      0 0 40px rgba(255, 255, 0, 0.95),
+      0 0 80px rgba(255, 255, 0, 0.75);
   }
   100% {
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.7), 0 0 16px rgba(255, 255, 0, 0.6);
+    box-shadow:
+      0 0 12px rgba(255, 255, 0, 0.9),
+      0 0 24px rgba(255, 255, 0, 0.8),
+      0 0 48px rgba(255, 255, 0, 0.6);
   }
 }
 
@@ -246,7 +255,13 @@
 
 <!-- Player Info -->
 <div class="bg-gray-800 text-white rounded-2xl shadow-lg p-4 space-y-1 max-w-sm ml-4">
-  <p><span class="font-bold">Username:</span> {user.username}</p>
+  
+  <div class="avatar flex items-center justify-center mb-4">
+    <div class="w-24 rounded-full">
+      <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=corgo_{token}" alt="Avatar" />
+    </div>
+    <div>{user.username}</div>
+  </div>
   <p><span class="font-bold">X:</span> {user.posx}</p>
   <p><span class="font-bold">Y:</span> {user.posy}</p>
   <p><span class="font-bold">Universe:</span> {user.universe}</p>
@@ -256,19 +271,18 @@
           style="background:{user.color}"></span>
     {user.color}
   </p>
-</div>
+  <p><span class="text-blue-500 hover:underline cursor-pointer" on:click={() => setPage("home")}>Logout</span></p>
 
-<div class="grid">
-  {#each grid as row}
-    {#each row as color}
-      <div class="cell" style="background-color: {color}"></div>
+  <div class="grid">
+    {#each grid as row}
+      {#each row as color}
+        <div class="cell" style="background-color: {color}"></div>
+      {/each}
     {/each}
-  {/each}
+  </div>
+
 </div>
 
-
-Use arrow keys or buttons<br>
-Players cannot paint the origin: X:0, Y:0.
 
 
 <div class="grid gap-[5px] mb-4 w-full"
@@ -315,8 +329,6 @@ Players cannot paint the origin: X:0, Y:0.
   </button>
 </div>
 
-
-Player must be at X:0, Y:0 to change their mask color.
 <div class="flex flex-col gap-3">
   <!-- White Button -->
   <button

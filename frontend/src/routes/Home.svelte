@@ -117,7 +117,7 @@
         Example: a <span class="font-bold text-red-500">Red</span> masked player is unable to enter a 
         <span class="font-bold text-green-500">Green</span> colored square, or 
         <span class="font-bold text-yellow-400">Yellow</span> onto 
-        <span class="font-bold text-purple-500">Purple</span>.
+        <span class="font-bold text-purple-500">Purple</span>. The player may use on screen buttons or keyboard keys to play.
       </p>
 
 
