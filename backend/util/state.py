@@ -1,4 +1,5 @@
 from datetime import datetime
+from io import BytesIO
 
 
 class User:
@@ -24,6 +25,7 @@ class AppState:
         self.seed = "corgo844"
         self.auth_tokens = {}
         self.cells = {}
+        self.image = BytesIO
 
 
 STATE = AppState()

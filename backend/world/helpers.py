@@ -1,6 +1,8 @@
+import math
 import random
+from io import BytesIO
 
-from PIL import Image
+from PIL import Image, ImageDraw
 from util.state import STATE, User
 
 
@@ -82,7 +84,7 @@ def tron_check(user: User, x: int, y: int) -> bool:
     return False
 
 
-def world_image(size: int) -> list:
+def world_colors(size: int) -> list:
     colors = world_view(0 - int(size / 2), 0 - int(size / 2), "0", size)
     print(colors)
 
@@ -105,3 +107,22 @@ def world_image(size: int) -> list:
     # img.save("grid.png")
 
     return colors
+
+
+def colors_to_image(colors: list) -> BytesIO:
+    grid_size = int(math.sqrt(len(colors)))
+    cell_size = 50
+
+    img = Image.new("RGB", (grid_size * cell_size, grid_size * cell_size))
+    draw = ImageDraw.Draw(img)
+
+    for i, color in enumerate(colors):
+        x = (i % grid_size) * cell_size
+        y = (i // grid_size) * cell_size
+
+        draw.rectangle([x, y, x + cell_size, y + cell_size], fill=color)
+
+    buffer = BytesIO()
+    img.save(buffer, format="PNG")
+    buffer.seek(0)
+    return buffer
