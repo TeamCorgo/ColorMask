@@ -89,7 +89,7 @@
 >
 
     <div class="flex flex-col items-center">
-        <h1 class="text-white text-[6rem] font-bold drop-shadow-lg mb-16 z-10 stroke-black">
+        <h1 class="text-white text-[6rem] font-bold drop-shadow-lg mb-16 z-10 stroke-black select-none">
             Color Mask
         </h1>
 

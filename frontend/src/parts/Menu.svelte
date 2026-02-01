@@ -19,7 +19,9 @@
       <div class="hidden md:flex space-x-6">
           <a href="#" class="hover:text-gray-300" on:click={() => setPage('login')}>Login</a>
       </div>
-
+      <div class="hidden md:flex space-x-6">
+          <a href="#" class="hover:text-gray-300" on:click={() => setPage('quick')}>Quick</a>
+      </div>
       <div class="hidden md:flex space-x-6">
           <a href="#" class="hover:text-gray-300" on:click={() => setPage('game')}>Game</a>
       </div>
