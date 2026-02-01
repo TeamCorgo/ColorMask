@@ -254,14 +254,15 @@
 
 
 <!-- Player Info -->
-<div class="bg-gray-800 text-white rounded-2xl shadow-lg p-4 space-y-1 max-w-sm ml-4">
+<div class="bg-gray-800 text-white p-4 space-y-1 max-w-sm">
   
   <div class="avatar flex items-center justify-center mb-4">
-    <div class="w-24 rounded-full">
+    <div class="w-24 rounded-full" style="background:{user.color}">
       <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=corgo_{token}" alt="Avatar" />
     </div>
-    <div>{user.username}</div>
+    
   </div>
+  <div class="flex items-center justify-center">{user.username}</div>
   <p><span class="font-bold">X:</span> {user.posx}</p>
   <p><span class="font-bold">Y:</span> {user.posy}</p>
   <p><span class="font-bold">Universe:</span> {user.universe}</p>
@@ -273,15 +274,13 @@
   </p>
   <p><span class="text-blue-500 hover:underline cursor-pointer" on:click={() => setPage("home")}>Logout</span></p>
 
-  <div class="grid">
+  <div class="grid flex items-center justify-center">
     {#each grid as row}
       {#each row as color}
         <div class="cell" style="background-color: {color}"></div>
       {/each}
     {/each}
   </div>
-
-</div>
 
 
 
@@ -329,92 +328,96 @@
   </button>
 </div>
 
-<div class="flex flex-col gap-3">
-  <!-- White Button -->
-  <button
-    class="flex items-center justify-center text-black text-2xl font-semibold border rounded-lg 
-           px-6 py-3 transition transform hover:shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed"
-    style="background-color: #FFFFFF"
-    on:click={() => swap("white")}
-    disabled={user.posx !== 0 || user.posy !== 0}
-  >
-    Change 🎭 to White
-  </button>
 
-  <!-- Black Button -->
-  <button
-    class="flex items-center justify-center text-white text-2xl font-semibold border rounded-lg 
-           px-6 py-3 transition transform hover:shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed"
-    style="background-color: #000000"
-    on:click={() => swap("black")}
-    disabled={user.posx !== 0 || user.posy !== 0}
-  >
-    Change 🎭 to Black
-  </button>
+{#if user.posx === 0 && user.posy === 0}
+  <div class="flex flex-col gap-3">
+    <!-- White Button -->
+    <button
+      class="flex items-center justify-center text-black text-2xl font-semibold border rounded-lg 
+            px-6 py-3 transition transform hover:shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed"
+      style="background-color: #FFFFFF"
+      on:click={() => swap("white")}
+      disabled={user.posx !== 0 || user.posy !== 0}
+    >
+      Change 🎭 to White
+    </button>
 
-  <!-- Green Button -->
-  <button
-    class="flex items-center justify-center text-2xl font-semibold border rounded-lg 
-           px-6 py-3 transition transform hover:shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed"
-    style="background-color: #00FF00"
-    on:click={() => swap("green")}
-    disabled={user.posx !== 0 || user.posy !== 0}
-  >
-    Change 🎭 to Green
-  </button>
+    <!-- Black Button -->
+    <button
+      class="flex items-center justify-center text-white text-2xl font-semibold border rounded-lg 
+            px-6 py-3 transition transform hover:shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed"
+      style="background-color: #000000"
+      on:click={() => swap("black")}
+      disabled={user.posx !== 0 || user.posy !== 0}
+    >
+      Change 🎭 to Black
+    </button>
 
-  <!-- Red Button -->
-  <button
-    class="flex items-center justify-center text-2xl font-semibold border rounded-lg 
-           px-6 py-3 transition transform hover:shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed"
-    style="background-color: #FF0000"
-    on:click={() => swap("red")}
-    disabled={user.posx !== 0 || user.posy !== 0}
-  >
-    Change 🎭 to Red
-  </button>
+    <!-- Green Button -->
+    <button
+      class="flex items-center justify-center text-2xl font-semibold border rounded-lg 
+            px-6 py-3 transition transform hover:shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed"
+      style="background-color: #00FF00"
+      on:click={() => swap("green")}
+      disabled={user.posx !== 0 || user.posy !== 0}
+    >
+      Change 🎭 to Green
+    </button>
 
-  <!-- Blue Button -->
-  <button
-    class="flex items-center justify-center text-2xl font-semibold border rounded-lg 
-           px-6 py-3 transition transform hover:shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed"
-    style="background-color: #0000FF"
-    on:click={() => swap("blue")}
-    disabled={user.posx !== 0 || user.posy !== 0}
-  >
-    Change 🎭 to Blue
-  </button>
+    <!-- Red Button -->
+    <button
+      class="flex items-center justify-center text-2xl font-semibold border rounded-lg 
+            px-6 py-3 transition transform hover:shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed"
+      style="background-color: #FF0000"
+      on:click={() => swap("red")}
+      disabled={user.posx !== 0 || user.posy !== 0}
+    >
+      Change 🎭 to Red
+    </button>
 
-  <!-- Orange Button -->
-  <button
-    class="flex items-center justify-center text-2xl font-semibold border rounded-lg 
-           px-6 py-3 transition transform hover:shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed"
-    style="background-color: #FFA500"
-    on:click={() => swap("orange")}
-    disabled={user.posx !== 0 || user.posy !== 0}
-  >
-    Change 🎭 to Orange
-  </button>
+    <!-- Blue Button -->
+    <button
+      class="flex items-center justify-center text-2xl font-semibold border rounded-lg 
+            px-6 py-3 transition transform hover:shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed"
+      style="background-color: #0000FF"
+      on:click={() => swap("blue")}
+      disabled={user.posx !== 0 || user.posy !== 0}
+    >
+      Change 🎭 to Blue
+    </button>
 
-  <!-- Yellow Button -->
-  <button
-    class="flex items-center justify-center text-2xl font-semibold border rounded-lg 
-           px-6 py-3 transition transform hover:shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed"
-    style="background-color: #FFFF00"
-    on:click={() => swap("yellow")}
-    disabled={user.posx !== 0 || user.posy !== 0}
-  >
-    Change 🎭 to Yellow
-  </button>
+    <!-- Orange Button -->
+    <button
+      class="flex items-center justify-center text-2xl font-semibold border rounded-lg 
+            px-6 py-3 transition transform hover:shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed"
+      style="background-color: #FFA500"
+      on:click={() => swap("orange")}
+      disabled={user.posx !== 0 || user.posy !== 0}
+    >
+      Change 🎭 to Orange
+    </button>
 
-  <!-- Purple Button -->
-  <button
-    class="flex items-center justify-center text-2xl font-semibold border rounded-lg 
-           px-6 py-3 transition transform hover:shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed"
-    style="background-color: #800080"
-    on:click={() => swap("purple")}
-    disabled={user.posx !== 0 || user.posy !== 0}
-  >
-    Change 🎭 to Purple
-  </button>
+    <!-- Yellow Button -->
+    <button
+      class="flex items-center justify-center text-2xl font-semibold border rounded-lg 
+            px-6 py-3 transition transform text-black hover:shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed"
+      style="background-color: #FFFF00"
+      on:click={() => swap("yellow")}
+      disabled={user.posx !== 0 || user.posy !== 0}
+    >
+      Change 🎭 to Yellow
+    </button>
+
+    <!-- Purple Button -->
+    <button
+      class="flex items-center justify-center text-2xl font-semibold border rounded-lg 
+            px-6 py-3 transition transform hover:shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed"
+      style="background-color: #800080"
+      on:click={() => swap("purple")}
+      disabled={user.posx !== 0 || user.posy !== 0}
+    >
+      Change 🎭 to Purple
+    </button>
+  </div>
+{/if}
 </div>
