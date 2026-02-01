@@ -32,6 +32,9 @@
         if (e.key === " ") move("Flip");
         };
         window.addEventListener("keydown", handleKey);
+        
+        // Fire on first load (skip the interval)
+        updateData();
 
         return () => {
             clearInterval(interval);
@@ -85,10 +88,6 @@
             //setPage("login");
         }
     }
-
-
-    // Fire on first load (skip the interval)
-    updateData();
 </script>
 
 

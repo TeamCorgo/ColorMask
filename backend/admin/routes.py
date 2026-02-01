@@ -4,24 +4,18 @@ import shutil
 from account.helpers import gen_user, get_user
 from fastapi import APIRouter, Depends, HTTPException, status
 from util.state import STATE, User
-from util.tools import (
-    reserved_universe_names,
-    save_cells,
-    save_themes,
-    save_tokens,
-    save_users,
-)
+from util.tools import reserved_universe_names
 
 admin_router = APIRouter()
 
 
 @admin_router.post("/state")
-def state_route(user: User = Depends(get_user)) -> dict:
-    if not user.username != "Hunter":
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Invalid username",
-        )
+def state_route():  # user: User = Depends(get_user)) -> dict:
+    # if not user.username != "Hunter":
+    #    raise HTTPException(
+    #        status_code=status.HTTP_400_BAD_REQUEST,
+    #        detail="Invalid username",
+    #    )
     return {
         "tokens": STATE.auth_tokens,
         "users": STATE.users,
@@ -31,7 +25,7 @@ def state_route(user: User = Depends(get_user)) -> dict:
 
 
 @admin_router.post("/purge")
-def pruge_route(user: User = Depends(get_user)) -> dict:
+def pruge_route(user: User = Depends(get_user)) -> None:
     if not user.username != "Hunter":
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -59,10 +53,5 @@ def pruge_route(user: User = Depends(get_user)) -> dict:
 
     # Set a default token for Hunter (Quick Developmnent)
     STATE.auth_tokens["Hunter"] = "asd"
-
-    save_users(STATE.users)
-    save_cells(STATE.cells)
-    save_tokens(STATE.auth_tokens)
-    save_themes(STATE.themes)
 
     return
