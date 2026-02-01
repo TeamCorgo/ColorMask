@@ -5,6 +5,7 @@ from account.helpers import gen_user, get_user
 from fastapi import APIRouter, Depends, HTTPException, status
 from util.state import STATE, User
 from util.tools import reserved_universe_names
+from world.helpers import world_view
 
 admin_router = APIRouter()
 
@@ -55,3 +56,16 @@ def pruge_route(user: User = Depends(get_user)) -> None:
     STATE.auth_tokens["Hunter"] = "asd"
 
     return
+
+
+@admin_router.post("/view")
+def view_route(
+    x: int, y: int, universe: str, size: int, user: User = Depends(get_user)
+) -> list:
+    # if not user.username != "Hunter":
+    #    raise HTTPException(
+    #        status_code=status.HTTP_400_BAD_REQUEST,
+    #        detail="Invalid username",
+    #    )
+
+    return world_view(x, y, universe, size)

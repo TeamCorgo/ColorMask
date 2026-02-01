@@ -29,7 +29,16 @@ def startup() -> None:
     # print(reserved_universe_names())
     for name in reserved_universe_names():
         STATE.users[name] = gen_user(name)
-        STATE.themes[name] = ["#000000", "#FFFFFF"]
+        # STATE.themes[name] = ["#000000", "#FFFFFF"]
+        STATE.themes[name] = [
+            "#f87171",
+            "#34d399",
+            "#60a5fa",
+            "#facc15",
+            "#a78bfa",
+            "#2dd4bf",
+            "#f472b6",
+        ]
 
     # Set a default token for Hunter (Quick Developmnent)
     STATE.auth_tokens["Hunter"] = "asd"

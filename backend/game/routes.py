@@ -1,7 +1,9 @@
+import random
+
 from account.helpers import get_user
 from fastapi import APIRouter, Depends
-from util.state import User
-from world.helpers import player_view
+from util.state import STATE, User
+from world.helpers import gen_cord, player_view
 
 game_router = APIRouter()
 
@@ -33,3 +35,16 @@ def move_east(user: User = Depends(get_user)) -> dict:
 def move_west(user: User = Depends(get_user)) -> dict:
     user.x -= 1
     return {"message": "Moved west", "view": player_view(user)}
+
+
+@game_router.post("/random")
+def randomize(user: User = Depends(get_user)) -> None:
+    cord = gen_cord(user.x, user.y, user.universe)
+
+    rng = random.Random("flip" + ":" + cord)
+    # cell = Cell(color=rng.choice(STATE.themes[user.universe]))
+    # STATE.cells[cord] = cell
+    STATE.cells[cord] = rng.choice(STATE.themes[user.universe])
+
+    # return {"message": "Moved west", "view": player_view(user)}
+    return
