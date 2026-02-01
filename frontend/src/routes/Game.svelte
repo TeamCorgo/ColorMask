@@ -147,12 +147,6 @@
     }
 </script>
 
-
-
-
-<h2>Grid 5×5 — Use arrow keys or buttons</h2>
-
-
 <style>
   .grid {
     display: grid;
@@ -219,7 +213,7 @@
 
 
 <!-- Player Info -->
-<div class="bg-gray-800 text-white rounded-2xl shadow-lg p-4 space-y-1">
+<div class="bg-gray-800 text-white rounded-2xl shadow-lg p-4 space-y-1 max-w-sm ml-4">
   <p><span class="font-bold">Username:</span> {user.username}</p>
   <p><span class="font-bold">X:</span> {user.posx}</p>
   <p><span class="font-bold">Y:</span> {user.posy}</p>
@@ -241,6 +235,7 @@
 </div>
 
 
+<h2>Grid 5×5 — Use arrow keys or buttons</h2>
 
 <div class="grid gap-[5px] mb-4
             [grid-template-columns:repeat(3,50px)]
