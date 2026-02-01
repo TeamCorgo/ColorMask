@@ -1,5 +1,6 @@
 from account.helpers import get_user
 from fastapi import APIRouter, Depends
+from fastapi.responses import StreamingResponse
 from util.state import STATE, User
 from world.helpers import gen_cord, player_view, tron_check
 
@@ -203,3 +204,9 @@ def paint(user: User = Depends(get_user)) -> None:
     }
     # return {"message": "Moved west", "view": player_view(user)}
     return {"message": "Paint", "view": player_view(user), "userdata": userdata}
+
+
+@game_router.post("/overview")
+def overview_route() -> StreamingResponse:
+    STATE.image.seek(0)  # ← Reset pointer to start
+    return StreamingResponse(STATE.image, media_type="image/png")

@@ -3,7 +3,6 @@ import shutil
 
 from account.helpers import gen_user, get_user
 from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi.responses import StreamingResponse
 from util.state import STATE, User
 from util.tools import reserved_universe_names
 from world.helpers import colors_to_image, world_colors
@@ -55,14 +54,7 @@ def pruge_route(user: User = Depends(get_user)) -> None:
 
     # Set a default token for Hunter (Quick Developmnent)
     STATE.auth_tokens["Hunter"] = "asd"
-
     return
-
-
-@admin_router.post("/view")
-def view_route() -> StreamingResponse:
-    STATE.image.seek(0)  # ← Reset pointer to start
-    return StreamingResponse(STATE.image, media_type="image/png")
 
 
 @admin_router.post("/make")

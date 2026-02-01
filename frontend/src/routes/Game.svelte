@@ -272,6 +272,8 @@
           style="background:{user.color}"></span>
     {user.color}
   </p>
+
+  <p><span class="text-blue-500 hover:underline cursor-pointer" on:click={() => setPage("map")}>Map View (1 minute refresh rate)</span></p>
   <p><span class="text-blue-500 hover:underline cursor-pointer" on:click={() => setPage("home")}>Logout</span></p>
 
   <div class="grid flex items-center justify-center">

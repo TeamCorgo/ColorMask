@@ -16,7 +16,7 @@
   // Load image from server
   async function loadImage() {
     try {
-      const res = await fetch(`${envServerAddress}admin/view`, {
+      const res = await fetch(`${envServerAddress}game/overview`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -175,7 +175,7 @@
 
 <h1>Live Image Viewer</h1>
 <p>Use mouse wheel or pinch to zoom, drag to pan.</p>
-
+<p><span class="text-blue-500 hover:underline cursor-pointer" on:click={() => setPage("game")}>Return to game</span></p>
 <canvas
   bind:this={canvas}
   on:wheel={handleWheel}
