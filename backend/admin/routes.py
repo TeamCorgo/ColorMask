@@ -31,7 +31,13 @@ def state_route(user: User = Depends(get_user)) -> dict:
 
 
 @admin_router.post("/purge")
-def pruge_route() -> None:
+def pruge_route(user: User = Depends(get_user)) -> dict:
+    if not user.username != "Hunter":
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid username",
+        )
+
     storage_path = "/storage"
 
     # Clear everything inside the folder but keep the folder itself
