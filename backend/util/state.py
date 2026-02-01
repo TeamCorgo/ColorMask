@@ -5,7 +5,7 @@ class User:
     def __init__(self, username: str):
         self.username: str = username
         self.created = datetime.now().strftime("%Y.%m.%d %H:%M")
-        self.theme_color: int = 0
+        self.color: str = "#000000"
         self.x: int = 0
         self.y: int = 0
         self.universe: str = "0"

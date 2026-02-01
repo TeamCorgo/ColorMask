@@ -110,7 +110,6 @@
                 Create Account
               </button>
             </div>
-            <!-- svelte-ignore a11y-click-events-have-key-events -->
             <span
               on:click={() => setPage("login")}
               class="text-blue-500 hover:underline cursor-pointer"

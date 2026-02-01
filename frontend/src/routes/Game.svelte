@@ -31,7 +31,7 @@
         if (e.key === "ArrowDown") move("south");
         if (e.key === "ArrowLeft") move("west");
         if (e.key === "ArrowRight") move("east");
-        if (e.key === " ") move("Flip");
+        if (e.key === " ") paint();
         };
         window.addEventListener("keydown", handleKey);
 
@@ -43,6 +43,38 @@
             window.removeEventListener("keydown", handleKey);
         };
     });
+
+
+
+
+
+    async function paint() {
+        data = {};
+
+        try {
+            const response = await fetch(envServerAddress + "game/paint", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
+                },
+            });
+            data = await response.json();
+                        //alert(localStorage.getItem("Token"));
+            console.log(data);
+            console.log(data.view);
+            // data.view is a 25 length array of hex colors
+
+            // Convert 1D array into 2D 5x5 grid
+            grid = [];
+            for (let i = 0; i < 5; i++) {
+                grid.push(data.view.slice(i * 5, i * 5 + 5));
+            }
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    }
+
 
 
 
@@ -148,8 +180,9 @@
 </div>
 
 <div>
-  <button on:click={() => move("north")}>⬆</button><br/>
-  <button on:click={() => move("west")}>⬅</button>
-  <button on:click={() => move("east")}>➡</button><br/>
-  <button on:click={() => move("south")}>⬇</button>
+  <button on:click={() => move("north")}>⬆️</button><br/>
+  <button on:click={() => move("west")}>⬅️</button>
+  <button on:click={() => paint()}>🎨</button>
+  <button on:click={() => move("east")}>➡️</button><br/>
+  <button on:click={() => move("south")}>⬇️</button>
 </div>
