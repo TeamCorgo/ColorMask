@@ -2,14 +2,13 @@
     import { onMount } from "svelte";
     import { setPage } from "../store";
 
-    let token = "asd";
+    let token = "";
     let data = {};
     let grid = [];
     let envServerAddress = "http://104.251.216.28:9000/";
 
     onMount(() => {
         document.title = "Color Mask | Game";
-        //localStorage.setItem("Token", token);
 
         if (localStorage.getItem("Dev")) {
             envServerAddress = "http://10.101.0.6:9000/";
@@ -19,6 +18,9 @@
         if (!localStorage.getItem("Token")) {
             setPage("login");
         }
+
+        // Convert session to token
+        token = localStorage.getItem("Token");
 
         const interval = setInterval(() => {
             updateData();
@@ -32,7 +34,7 @@
         if (e.key === " ") move("Flip");
         };
         window.addEventListener("keydown", handleKey);
-        
+
         // Fire on first load (skip the interval)
         updateData();
 
@@ -44,11 +46,33 @@
 
 
 
-    function move(direction) {
-        // TODO
-        alert(direction);
-    }
 
+    async function move(direction) {
+        data = {};
+
+        try {
+            const response = await fetch(envServerAddress + "game/move_" + direction, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
+                },
+            });
+            data = await response.json();
+                        //alert(localStorage.getItem("Token"));
+            console.log(data);
+            console.log(data.view);
+            // data.view is a 25 length array of hex colors
+
+            // Convert 1D array into 2D 5x5 grid
+            grid = [];
+            for (let i = 0; i < 5; i++) {
+                grid.push(data.view.slice(i * 5, i * 5 + 5));
+            }
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    }
 
     async function updateData() {
         data = {};
