@@ -8,9 +8,10 @@ def gen_cord(x: str, y: str, universe: str) -> str:
 
 
 def gen_color(x: int, y: int, universe: str) -> str:
-    rng = random.Random(STATE.seed + ":" + gen_cord(x, y, universe))
+    cord = gen_cord(x, y, universe)
+    rng = random.Random(STATE.seed + ":" + cord)
     cell = Cell(color=rng.choice(STATE.themes[universe]))
-    STATE.cells[gen_cord(x, y, universe)] = cell
+    STATE.cells[cord] = cell
     return cell.color
 
 
