@@ -178,7 +178,7 @@
   }
 </style>
 
-<h1>Live Image Viewer</h1>
+<h1>Image Viewer (Refresh every 60 seconds)</h1>
 <p>Use mouse wheel or pinch to zoom, drag to pan.</p>
 <p><span class="text-blue-500 hover:underline cursor-pointer" on:click={() => setPage("game")}>Return to game</span></p>
 <canvas
